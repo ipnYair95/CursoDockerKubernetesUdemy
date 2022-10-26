@@ -21,7 +21,7 @@ public class UsuarioFacade {
     private UsuarioService usuarioService;
 
     public Map<String,List<Usuario>> listar() {
-        return  Collections.singletonMap("users", usuarioService.listar() );
+        return  Collections.singletonMap("usuarios", usuarioService.listar() );
     }
 
     public ResponseEntity<?> detalle(Long id) {

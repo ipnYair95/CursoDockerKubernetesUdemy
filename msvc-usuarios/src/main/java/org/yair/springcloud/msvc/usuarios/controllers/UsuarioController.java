@@ -2,6 +2,8 @@ package org.yair.springcloud.msvc.usuarios.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +20,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioFacade usuarioFacade;
+
+    @Autowired
+    private ApplicationContext context;
 
     @GetMapping
     public Map<String,List<Usuario>>  listar() {
@@ -58,6 +63,11 @@ public class UsuarioController {
     @GetMapping("/usuarios-curso")
     public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids ){
         return usuarioFacade.obtenerAlumnosPorCurso(ids);
+    }
+
+    @GetMapping("/crash")
+    public void crash(){
+        ((ConfigurableApplicationContext )context).close();
     }
 
 

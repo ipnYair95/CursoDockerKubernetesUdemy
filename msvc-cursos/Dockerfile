@@ -24,6 +24,6 @@ COPY --from=builder /app/msvc-cursos/target/msvc-cursos-0.0.1-SNAPSHOT.jar .
 
 EXPOSE 8001
 
-CMD sleep 20 && java -jar msvc-cursos-0.0.1-SNAPSHOT.jar
+#CMD sleep 20 && java -jar msvc-cursos-0.0.1-SNAPSHOT.jar
 
-#CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
+CMD ["java", "-jar", "msvc-cursos-0.0.1-SNAPSHOT.jar"]
