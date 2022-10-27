@@ -4,13 +4,16 @@ package org.yair.springcloud.msvc.usuarios.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.yair.springcloud.msvc.usuarios.facade.UsuarioFacade;
 import org.yair.springcloud.msvc.usuarios.models.entity.Usuario;
 
 import javax.validation.Valid;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,8 +27,10 @@ public class UsuarioController {
     @Autowired
     private ApplicationContext context;
 
+
+
     @GetMapping
-    public Map<String,List<Usuario>>  listar() {
+    public Map<String, Object> listar() {
         return usuarioFacade.listar();
     }
 
@@ -61,15 +66,19 @@ public class UsuarioController {
     }
 
     @GetMapping("/usuarios-curso")
-    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids ){
+    public ResponseEntity<?> obtenerAlumnosPorCurso(@RequestParam List<Long> ids) {
         return usuarioFacade.obtenerAlumnosPorCurso(ids);
     }
 
     @GetMapping("/crash")
-    public void crash(){
-        ((ConfigurableApplicationContext )context).close();
+    public void crash() {
+        ((ConfigurableApplicationContext) context).close();
     }
 
+    @GetMapping("/authorized")
+    public Map<String, Object> authorized(@RequestParam( name = "code") String code){
+        return Collections.singletonMap( "code", code );
+    }
 
     private ResponseEntity<?> validar(BindingResult bindingResult) {
         Map<String, String> errores = new HashMap<>();

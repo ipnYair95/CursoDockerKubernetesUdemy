@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: msvc-cursos
+spec:
+  ports:
+    - port: 8002
+      protocol: TCP
+      targetPort: 8002
+  selector:
+    role: msvc-cursos
+  type: LoadBalancer
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -13,7 +26,7 @@ spec:
         role: msvc-cursos
     spec:
       containers:
-      - image: yairmarin/cursos:v2
+      - image: yairmarin/cursos:latest
         name: cursos
         ports:
         - containerPort: 8002

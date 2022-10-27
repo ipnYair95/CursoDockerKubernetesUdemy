@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: msvc-auth
+spec:
+  ports:
+    - port: 9000
+      protocol: TCP
+      targetPort: 9000
+  selector:
+    role: msvc-auth
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: msvc-auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      role: msvc-auth
+  template:
+    metadata:
+      labels:
+        role: msvc-auth
+    spec:
+      containers:
+      - image: yairmarin/auth:latest
+        name: msvc-auth
+        ports:
+        - containerPort: 9000
+        env:
+          - name: LB_USUARIOS_URI
+            valueFrom:
+              configMapKeyRef:
+                name: msvc-usuarios
+                key: lb_usuarios_uri
